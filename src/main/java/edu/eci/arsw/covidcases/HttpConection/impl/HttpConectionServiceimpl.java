@@ -8,6 +8,7 @@ import edu.eci.arsw.covidcases.model.Country;
 import edu.eci.arsw.covidcases.model.CovidStat;
 import edu.eci.arsw.covidcases.model.CovidStats;
 import edu.eci.arsw.covidcases.model.Data;
+import org.json.JSONArray;
 import org.springframework.stereotype.Service;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -50,14 +51,13 @@ public class HttpConectionServiceimpl implements HttpConectionService {
         stats = gson.fromJson(resp,Data.class);
         for (CovidStat stat:stats.getData().getCovid19Stats()) {
             if(dict.containsKey(stat.getCountry())){
-                dict.get(stat.getCountry()).addStat(stat);
+                dict.get(stat.getCountry()).addStatistics(stat);
             }
             else {
                 dict.put(stat.getCountry(),new Country(stat.getCountry()));
-                dict.get(stat.getCountry()).addStat(stat);
+                dict.get(stat.getCountry()).addStatistics(stat);
             }
         }
-
         return dict;
     }
 
@@ -88,6 +88,7 @@ public class HttpConectionServiceimpl implements HttpConectionService {
 
         Gson gson = new Gson();
         Data stats= new Data();
+
         stats = gson.fromJson(resp,Data.class);
         Country country1= new Country(country);
         for (CovidStat stat:stats.getData().getCovid19Stats()) {

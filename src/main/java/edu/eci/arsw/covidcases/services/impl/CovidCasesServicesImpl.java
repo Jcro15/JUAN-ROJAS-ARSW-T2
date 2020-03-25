@@ -1,11 +1,13 @@
 package edu.eci.arsw.covidcases.services.impl;
 
 import edu.eci.arsw.covidcases.Exceptions.CovidCasesException;
+import edu.eci.arsw.covidcases.HttpConection.HttpConectionLocationService;
 import edu.eci.arsw.covidcases.HttpConection.HttpConectionService;
 import edu.eci.arsw.covidcases.cache.CovidCasesCache;
 import edu.eci.arsw.covidcases.cache.impl.Tuple;
 import edu.eci.arsw.covidcases.model.Country;
 import edu.eci.arsw.covidcases.model.CovidStat;
+import edu.eci.arsw.covidcases.model.Location;
 import edu.eci.arsw.covidcases.services.CovidCasesServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,16 +24,15 @@ public class CovidCasesServicesImpl implements CovidCasesServices {
     @Autowired
     CovidCasesCache covidCasesCache;
 
+    @Autowired
+    HttpConectionLocationService httpConectionLocationService;
+
     @Override
     public List<Country> getStatistics() throws CovidCasesException {
 
         HashMap<String,Country> dict=httpConectionService.getStatistics();
-        ArrayList<Country> countries=new ArrayList<Country>();
-
-        for (Country country: dict.values()) {
-            countries.add(country);
-
-        }
+        Collection<Country> values = dict.values();
+        ArrayList<Country> countries = new ArrayList<Country>(values);
         Collections.sort(countries, Comparator.comparing(Country::getDeaths)
                 .thenComparing(Country::getConfirmed)
                 .thenComparing(Country::getRecovered).reversed());
@@ -48,6 +49,7 @@ public class CovidCasesServicesImpl implements CovidCasesServices {
             Collections.sort(res.getStatList(), Comparator.comparing(CovidStat::getDeaths)
                     .thenComparing(CovidStat::getConfirmed)
                     .thenComparing(CovidStat::getRecovered).reversed());
+            res.setLocation(httpConectionLocationService.getCountryLocation(country));
             covidCasesCache.saveStatisticsByCountry(country,res);
             return res;
         }
@@ -60,10 +62,17 @@ public class CovidCasesServicesImpl implements CovidCasesServices {
                 Collections.sort(res.getStatList(), Comparator.comparing(CovidStat::getDeaths)
                         .thenComparing(CovidStat::getConfirmed)
                         .thenComparing(CovidStat::getRecovered).reversed());
+                res.setLocation(httpConectionLocationService.getCountryLocation(country));
                 covidCasesCache.saveStatisticsByCountry(country,res);
                 return res;
             }
         }
         return response.getElem1();
     }
+
+    @Override
+    public Location getCountryLocation(String country) throws CovidCasesException {
+        return httpConectionLocationService.getCountryLocation(country);
+    }
+
 }

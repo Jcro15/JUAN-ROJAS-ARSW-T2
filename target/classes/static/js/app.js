@@ -5,18 +5,10 @@ var Module = (function () {
         return mapList = list.map(function (country) {
             return {countryname: country.countryname,statList: country.statList,confirmed: country.confirmed,
                 deaths: country.deaths,
-                recovered: country.recovered};
+                recovered: country.recovered,
+            location:country.location};
         })
     }
-    function _mapd(list) {
-        return mapList = list.map(function (stat) {
-            return {city: stat.city,province: stat.province,country: stat.country,
-                confirmed:stat.confirmed,
-                deaths: stat.deaths,
-                recovered: stat.recovered};
-        })
-    }
-
 
 
     function _table(cities) {
@@ -42,7 +34,6 @@ var Module = (function () {
     };
     function _tabled(country) {
         document.getElementById("nombrePais").innerHTML = country.countryname;
-        $("#nombrePais > h2").text(country.countryname+"Holaaa");
         $("#pais > tbody").empty();
 
         $("#pais > tbody").append(
@@ -81,43 +72,41 @@ var Module = (function () {
 
     function plotMarkers(m)
     {
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: -34.397, lng: 150.644},
-            zoom: 8
-        });
+        iniciarMapa();
         markers = [];
         bounds = new google.maps.LatLngBounds();
+        console.log(m);
+        var position = new google.maps.LatLng(m.location.latlng[0], m.location.latlng[1]);
+        console.log(position);
+        markers.push(
+            new google.maps.Marker({
+                position: position,
+                map: map,
+                animation: google.maps.Animation.DROP
+            })
+        );
 
-        m.forEach(function (marker) {
-            var position = new google.maps.LatLng(marker.location.latitude, marker.location.longitude);
-
-            markers.push(
-                new google.maps.Marker({
-                    position: position,
-                    map: map,
-                    animation: google.maps.Animation.DROP
-                })
-            );
-
-            bounds.extend(position);
-        });
-
+        bounds.extend(position);
         map.fitBounds(bounds);
     }
 
-    function init (){
-        apiclient.getStatistics().then(function (data){
-            _table(data);});
+    function iniciarMapa() {
         map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: -34.397, lng: 150.644},
             zoom: 8
         });
+    }
+    function init (){
+        iniciarMapa();
+        apiclient.getStatistics().then(function (data){
+            _table(data);});
 
-    };
+    }
 
     function getCountryStatistics(name) {
         apiclient.getStatisticsByName(name).then(function (data){
-            _tabled(data);});
+            _tabled(data);
+            plotMarkers(data)});
     }
 
 

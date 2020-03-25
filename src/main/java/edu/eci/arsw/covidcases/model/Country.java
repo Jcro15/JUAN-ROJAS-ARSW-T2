@@ -9,6 +9,7 @@ public class Country {
     private long confirmed;
     private long deaths;
     private long recovered;
+    private Location location;
 
     public Country(String countryname) {
         this.countryname = countryname;
@@ -16,6 +17,15 @@ public class Country {
         this.deaths=0;
         this.recovered=0;
         this.statList=new ArrayList<CovidStat>();
+        this.location=new Location();
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public void addStat(CovidStat stat){
@@ -24,6 +34,12 @@ public class Country {
         recovered+=stat.getRecovered();
         statList.add(stat);
     }
+    public void addStatistics(CovidStat stat){
+        confirmed+=stat.getConfirmed();
+        deaths+=stat.getDeaths();
+        recovered+=stat.getRecovered();
+    }
+
 
     public String getCountryname() {
         return countryname;
