@@ -13,13 +13,20 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+/**
+ * Controlador API-REST para la raiz statistics, permite hacer get a /statistics y a /statistics/{countryname}
+ */
 @RestController
 @RequestMapping(value = "/statistics")
 public class CovidCasesAPIController {
     @Autowired
     CovidCasesServices covidCasesServices=null;
 
+    /**
+     * retorna la lista de todos los paises que tienen estadisticas de coronavirus si es exitoso retornar
+     * el codigo Accepted, si no representa un error interno del servidor
+     * @return Un response entity con el codigo http y la lista de objetos Country en formato JSON
+     */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getStatistics(){
         try {
@@ -30,7 +37,12 @@ public class CovidCasesAPIController {
         }
     }
 
-
+    /**
+     * retorna el pais con nombre dado con sus  estadisticas de coronavirus.
+     * si es exitoso retorna el codigo Accepted, si no el codigo Not Found
+     * @param country el nombre del pais que se desea consultar
+     * @return Un response entity con el codigo http y un objeto  Country en formato JSON
+     */
     @RequestMapping(path = "/{country}",method = RequestMethod.GET)
     public ResponseEntity<?> getStatisticsByCountry(@PathVariable("country") String country){
         try {

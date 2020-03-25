@@ -1,0 +1,10 @@
+edu.eci.arsw.covidcases
+edu.eci.arsw.covidcases.Exceptions
+edu.eci.arsw.covidcases.HttpConection
+edu.eci.arsw.covidcases.HttpConection.impl
+edu.eci.arsw.covidcases.cache
+edu.eci.arsw.covidcases.cache.impl
+edu.eci.arsw.covidcases.controllers
+edu.eci.arsw.covidcases.model
+edu.eci.arsw.covidcases.services
+edu.eci.arsw.covidcases.services.impl

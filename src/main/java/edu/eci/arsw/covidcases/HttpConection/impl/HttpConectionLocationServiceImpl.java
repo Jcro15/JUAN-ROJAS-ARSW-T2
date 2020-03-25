@@ -12,8 +12,17 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
+/**
+ * Conexión con el servicio de localización de rapidapi
+ */
 @Service
 public class HttpConectionLocationServiceImpl implements HttpConectionLocationService {
+    /**
+     * Retorna la localizacion  [longitud,latitud] de un pais dado despues de consultarla en rapidapi
+     * @param country el nombre del pais del que se desea saber la localizacion
+     * @return un objeto Location con las coordenadas del pais obtenidas de la api
+     * @throws CovidCasesException si el pais no existe dentro de la api
+     */
     @Override
     public Location getCountryLocation(String country) throws CovidCasesException {
 
@@ -32,7 +41,10 @@ public class HttpConectionLocationServiceImpl implements HttpConectionLocationSe
                 resp= res.body().string();
             }
         } catch (IOException e) {
-            throw new CovidCasesException("Not Found");
+            throw new CovidCasesException("El pais no fue encontrado");
+        }
+        if(resp==null){
+            throw new CovidCasesException("El pais no fue encontrado");
         }
         String objeto = new JSONArray(resp).get(0).toString();
         Gson gson = new Gson();

@@ -2,18 +2,16 @@ package edu.eci.arsw.covidcases.cache.impl;
 
 import edu.eci.arsw.covidcases.cache.CovidCasesCache;
 import edu.eci.arsw.covidcases.model.Country;
-import edu.eci.arsw.covidcases.model.CovidStat;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * Representacion de cache que utiliza un ConcurrentHashMap para almacenar los resultados obtenidos
+ */
 @Service
 public class CovidCasesCacheImpl implements CovidCasesCache {
 
-    Tuple<CopyOnWriteArrayList<Country>,Long> cacheCountries;
 
     ConcurrentHashMap<String,Tuple<Country,Long>> cacheStats;
 
@@ -22,14 +20,23 @@ public class CovidCasesCacheImpl implements CovidCasesCache {
     }
 
 
-
+    /**
+     * Retorna el objeto Country con los datos de coronavirus de este y el tiempo en el que fue guardado en cache
+     * @param name el nombre del pais
+     * @return una tupla  Country,Long que representa el pais almacenado y el tiempo en nanosegundos  del momento en que se guardo
+     *
+     */
     @Override
     public Tuple<Country, Long> getStoredStatisticsByName(String name) {
         return cacheStats.get(name);
     }
 
 
-
+    /**
+     * Guarda un pais dado en una estructura de datos concurrente
+     * @param countryname el nombre del pais
+     * @param country objeto Country que contiene todas las estadisitcas del pais
+     */
     @Override
     public void saveStatisticsByCountry(String countryname, Country country) {
         cacheStats.put(countryname,new Tuple<Country,Long>(country,System.nanoTime()));

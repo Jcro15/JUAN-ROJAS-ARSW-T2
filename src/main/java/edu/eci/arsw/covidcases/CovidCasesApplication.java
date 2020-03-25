@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
- * Clase main de la aplicaion AirportFinder
+ * Clase main de la aplicaion CovidCasesApplication
  */
 @SpringBootApplication
 @ComponentScan(basePackages = {"edu.eci.arsw.covidcases"})

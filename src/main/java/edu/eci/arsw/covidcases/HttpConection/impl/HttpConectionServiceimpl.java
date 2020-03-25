@@ -1,28 +1,30 @@
 package edu.eci.arsw.covidcases.HttpConection.impl;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import edu.eci.arsw.covidcases.Exceptions.CovidCasesException;
 import edu.eci.arsw.covidcases.HttpConection.HttpConectionService;
 import edu.eci.arsw.covidcases.model.Country;
 import edu.eci.arsw.covidcases.model.CovidStat;
-import edu.eci.arsw.covidcases.model.CovidStats;
 import edu.eci.arsw.covidcases.model.Data;
-import org.json.JSONArray;
 import org.springframework.stereotype.Service;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
+/**
+ * Implementacion de conexion http que consulta los datos de coronavirus de los paises en la api rapidapi
+ */
 @Service
 public class HttpConectionServiceimpl implements HttpConectionService {
 
-
+    /**
+     * Retorna las estadisticas de coronavirus de todos los paises con registros despues de consultarlas en rapidapi
+     * @return una hashmap String,Country con el nombre del pais y un objeto que tiene todas las estadisticas del pais correspondiente
+     * @throws CovidCasesException Si la peticion falla
+     */
     @Override
     public HashMap<String, Country> getStatistics() throws CovidCasesException {
         OkHttpClient client = new OkHttpClient();
@@ -42,9 +44,9 @@ public class HttpConectionServiceimpl implements HttpConectionService {
                 resp= res.body().string();
             }
         } catch (IOException e) {
-            throw new CovidCasesException("Not Found");
+            throw new CovidCasesException("El pais no fue encontrado");
         }
-        //System.out.println(resp);
+
         Gson gson = new Gson();
         HashMap<String ,Country> dict=new HashMap<String ,Country>();
         Data stats=new Data();
@@ -60,7 +62,12 @@ public class HttpConectionServiceimpl implements HttpConectionService {
         }
         return dict;
     }
-
+    /**
+     * Retorna las estadisticas de coronavirus de un pais especifico despues de consultarlas en rapidapi
+     * @param country el pais que se quiere buscar
+     * @return el objeto Country con las estadisticas del pais correspondiente
+     * @throws CovidCasesException si el pais no se encuentra en la api
+     */
     @Override
     public Country getStatisticsByCountry(String country) throws CovidCasesException {
         OkHttpClient client = new OkHttpClient();
@@ -80,10 +87,11 @@ public class HttpConectionServiceimpl implements HttpConectionService {
                 resp= res.body().string();
             }
         } catch (IOException e) {
-            throw new CovidCasesException("Not Found");
+            throw new CovidCasesException("El pais no fue encontrado");
         }
-        if(res.message().equals("Country not found. Returning all stats. Please use a country name found in the data property.")){
-            throw new CovidCasesException("El pais no existe en la API");
+
+        if(resp.contains("Country not found. Returning all stats. Please use a country name found in the data property")) {
+            throw new CovidCasesException("El pais no fue encontrado");
         }
 
         Gson gson = new Gson();

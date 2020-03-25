@@ -11,8 +11,8 @@ var Module = (function () {
     }
 
 
-    function _table(cities) {
-        countries = _map(cities);
+    function _table(result) {
+        countries = _map(result);
         $("#estadisticas > tbody").empty();
         countries.map(function (country) {
             $("#estadisticas > tbody").append(
@@ -98,13 +98,13 @@ var Module = (function () {
     }
     function init (){
         iniciarMapa();
-        apiclient.getStatistics().then(function (data){
+        api.getStatistics().then(function (data){
             _table(data);});
 
     }
 
     function getCountryStatistics(name) {
-        apiclient.getStatisticsByName(name).then(function (data){
+        api.getStatisticsByName(name).then(function (data){
             _tabled(data);
             plotMarkers(data)});
     }

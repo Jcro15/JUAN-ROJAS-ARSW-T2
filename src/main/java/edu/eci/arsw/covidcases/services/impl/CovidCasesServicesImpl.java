@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+/**
+ *
+ */
 @Service
 public class CovidCasesServicesImpl implements CovidCasesServices {
 
@@ -26,7 +29,11 @@ public class CovidCasesServicesImpl implements CovidCasesServices {
 
     @Autowired
     HttpConectionLocationService httpConectionLocationService;
-
+    /**
+     *
+     * @return las estadisticas de todos los paises con casos decoronavirus registrados
+     * @throws CovidCasesException si ocurre un error al buscar las estadisticas
+     */
     @Override
     public List<Country> getStatistics() throws CovidCasesException {
 
@@ -38,7 +45,12 @@ public class CovidCasesServicesImpl implements CovidCasesServices {
                 .thenComparing(Country::getRecovered).reversed());
         return countries;
     }
-
+    /**
+     * Busca y retorna las estadisticas de coronavirus de un pais dado
+     * @param country el nombre del pais
+     * @return el objeto Country con todas las estadisticas del pais
+     * @throws CovidCasesException si no se encuentra el pais
+     */
     @Override
     public Country getStatisticsByCountry(String country) throws CovidCasesException {
         Tuple<Country,Long> response = null;
@@ -69,7 +81,12 @@ public class CovidCasesServicesImpl implements CovidCasesServices {
         }
         return response.getElem1();
     }
-
+    /**
+     * retorna la localizacion de un pais dado
+     * @param country el nombre del pais
+     * @return la localizacion de un pais dado
+     * @throws CovidCasesException si no se encuentra la localizacion del pais
+     */
     @Override
     public Location getCountryLocation(String country) throws CovidCasesException {
         return httpConectionLocationService.getCountryLocation(country);
