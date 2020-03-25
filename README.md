@@ -27,6 +27,9 @@ marcarlo con la anotacion @Autowired y seleccionarla donde se desee usar usando 
 
 ### Bonos
 * Realicé el bono del tiempo en caché
+## Evidencias
+![](ArchitectureDiagrams/bono1.1.png)
+![](ArchitectureDiagrams/bono1.2.png)
 
 ## Preparación para el Parcial
 
