@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Airports Finder</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+    <script type="text/javascript" src="js/apiclient.js"></script>
+    <script type="text/javascript" src="js/app.js" ></script>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?signed_in=true&language=en"
+            type="text/javascript"></script>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+            background-color: grey;
+        }
+        .body {
+            background-color: #B8DAF0;
+        }
+    </style>
+
+
+
+</head>
+<body onload="Module.init()">
+<h1>COVID-19 CORONAVIRUS ARSW</h1>
+
+
+<div class="container">
+
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Localizacion" id="loc" style="margin-bottom: 5px">
+            <button class="btn btn-primary" type="button" onclick="Module.getAirportsByName(loc.value)">Search</button>
+
+    </div>
+
+    <table class="table table-striped" id="estadisticas">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Country</th>
+            <th scope="col">Num deaths</th>
+            <th scope="col">Num Infected</th>
+            <th scope="col">Num cured</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+
+
+
+
+    <div id="map"></div>
+
+    <table class="table table-striped" id="pais">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Estadistica</th>
+            <th scope="col">Numero</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+    <table class="table table-striped" id="porpais">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Region</th>
+            <th scope="col">Num deaths</th>
+            <th scope="col">Num Infected</th>
+            <th scope="col">Num cured</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>

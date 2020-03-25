@@ -1,0 +1,14 @@
+edu\eci\arsw\covidcases\controllers\CovidCasesAPIController.class
+edu\eci\arsw\covidcases\cache\impl\CovidCasesCacheImpl.class
+edu\eci\arsw\covidcases\Exceptions\CovidCasesException.class
+edu\eci\arsw\covidcases\services\impl\CovidCasesServicesImpl.class
+edu\eci\arsw\covidcases\model\CovidStat.class
+edu\eci\arsw\covidcases\CovidCasesApplication.class
+edu\eci\arsw\covidcases\cache\impl\Tuple.class
+edu\eci\arsw\covidcases\services\CovidCasesServices.class
+edu\eci\arsw\covidcases\cache\CovidCasesCache.class
+edu\eci\arsw\covidcases\model\Country.class
+edu\eci\arsw\covidcases\HttpConection\HttpConectionService.class
+edu\eci\arsw\covidcases\model\CovidStats.class
+edu\eci\arsw\covidcases\HttpConection\impl\HttpConectionServiceimpl.class
+edu\eci\arsw\covidcases\model\Data.class
