@@ -28,16 +28,12 @@
 
 </head>
 <body onload="Module.init()">
-<h1>COVID-19 CORONAVIRUS ARSW</h1>
+
 
 
 <div class="container">
+    <h1>COVID-19 CORONAVIRUS ARSW</h1>
 
-    <div class="input-group">
-        <input type="text" class="form-control" placeholder="Localizacion" id="loc" style="margin-bottom: 5px">
-            <button class="btn btn-primary" type="button" onclick="Module.getAirportsByName(loc.value)">Search</button>
-
-    </div>
 
     <table class="table table-striped" id="estadisticas">
         <thead class="thead-dark">
@@ -58,7 +54,7 @@
 
 
     <div id="map"></div>
-
+<h2 id="nombrePais">  </h2>
     <table class="table table-striped" id="pais">
         <thead class="thead-dark">
         <tr>

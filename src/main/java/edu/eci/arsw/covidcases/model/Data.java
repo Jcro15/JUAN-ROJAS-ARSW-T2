@@ -6,8 +6,6 @@ public class Data{
 
 
     public Data() {
-
-
     }
 
     public CovidStats getData() {

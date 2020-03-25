@@ -10,9 +10,7 @@ import edu.eci.arsw.covidcases.services.CovidCasesServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -34,16 +32,22 @@ public class CovidCasesServicesImpl implements CovidCasesServices {
             countries.add(country);
 
         }
+        Collections.sort(countries, Comparator.comparing(Country::getDeaths)
+                .thenComparing(Country::getConfirmed)
+                .thenComparing(Country::getRecovered).reversed());
         return countries;
     }
 
     @Override
-    public List<CovidStat> getStatisticsByCountry(String country) throws CovidCasesException {
-        Tuple<List<CovidStat>,Long> response = null;
+    public Country getStatisticsByCountry(String country) throws CovidCasesException {
+        Tuple<Country,Long> response = null;
         response = covidCasesCache.getStoredStatisticsByName(country);
 
         if(response == null){
-            List<CovidStat> res=httpConectionService.getStatisticsByCountry(country);
+            Country res=httpConectionService.getStatisticsByCountry(country);
+            Collections.sort(res.getStatList(), Comparator.comparing(CovidStat::getDeaths)
+                    .thenComparing(CovidStat::getConfirmed)
+                    .thenComparing(CovidStat::getRecovered).reversed());
             covidCasesCache.saveStatisticsByCountry(country,res);
             return res;
         }
@@ -52,12 +56,14 @@ public class CovidCasesServicesImpl implements CovidCasesServices {
             Long elapsedTime = System.nanoTime() - timeInCache;
             Long time = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
             if(time>300){
-                List<CovidStat> res=httpConectionService.getStatisticsByCountry(country);
+                Country res=httpConectionService.getStatisticsByCountry(country);
+                Collections.sort(res.getStatList(), Comparator.comparing(CovidStat::getDeaths)
+                        .thenComparing(CovidStat::getConfirmed)
+                        .thenComparing(CovidStat::getRecovered).reversed());
                 covidCasesCache.saveStatisticsByCountry(country,res);
                 return res;
             }
         }
         return response.getElem1();
-
     }
 }

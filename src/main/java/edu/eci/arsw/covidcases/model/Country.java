@@ -22,6 +22,7 @@ public class Country {
         confirmed+=stat.getConfirmed();
         deaths+=stat.getDeaths();
         recovered+=stat.getRecovered();
+        statList.add(stat);
     }
 
     public String getCountryname() {

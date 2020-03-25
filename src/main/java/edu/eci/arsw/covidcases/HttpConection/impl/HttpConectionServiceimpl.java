@@ -62,7 +62,7 @@ public class HttpConectionServiceimpl implements HttpConectionService {
     }
 
     @Override
-    public List<CovidStat> getStatisticsByCountry(String country) throws CovidCasesException {
+    public Country getStatisticsByCountry(String country) throws CovidCasesException {
         OkHttpClient client = new OkHttpClient();
         String resp = null;
 
@@ -87,9 +87,13 @@ public class HttpConectionServiceimpl implements HttpConectionService {
         }
 
         Gson gson = new Gson();
-        Data stats=new Data();
+        Data stats= new Data();
         stats = gson.fromJson(resp,Data.class);
-        return stats.getData().getCovid19Stats();
+        Country country1= new Country(country);
+        for (CovidStat stat:stats.getData().getCovid19Stats()) {
+            country1.addStat(stat);
+        }
+        return country1;
     }
 }
 

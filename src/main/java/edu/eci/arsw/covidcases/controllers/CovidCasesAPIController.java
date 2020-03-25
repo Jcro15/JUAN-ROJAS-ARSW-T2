@@ -34,7 +34,6 @@ public class CovidCasesAPIController {
     @RequestMapping(path = "/{country}",method = RequestMethod.GET)
     public ResponseEntity<?> getStatisticsByCountry(@PathVariable("country") String country){
         try {
-            System.out.println("hola");
             return new ResponseEntity<>(covidCasesServices.getStatisticsByCountry(country), HttpStatus.ACCEPTED);
         } catch (CovidCasesException e) {
             Logger.getLogger(CovidCasesAPIController.class.getName()).log(Level.SEVERE, null, e);

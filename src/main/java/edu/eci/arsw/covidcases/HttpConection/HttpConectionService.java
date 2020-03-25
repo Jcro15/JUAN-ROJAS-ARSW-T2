@@ -13,5 +13,5 @@ import java.util.List;
 public interface HttpConectionService {
     HashMap<String, Country> getStatistics() throws CovidCasesException;
 
-    List<CovidStat> getStatisticsByCountry(String country) throws CovidCasesException;
+    Country getStatisticsByCountry(String country) throws CovidCasesException;
 }

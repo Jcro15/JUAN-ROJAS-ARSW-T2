@@ -10,12 +10,9 @@ import java.util.List;
 public interface CovidCasesCache {
 
 
-    Tuple<List<Country>,Long>getStoredStatistics();
 
-    Tuple<List<CovidStat> ,Long> getStoredStatisticsByName(String name);
+    Tuple<Country, Long> getStoredStatisticsByName(String name);
 
-    void saveStatistics(List<Country> countries);
-
-    void saveStatisticsByCountry(String country,List<CovidStat> stats);
+    void saveStatisticsByCountry(String countryname,Country country);
 
 }

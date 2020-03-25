@@ -9,5 +9,5 @@ import java.util.List;
 public interface CovidCasesServices {
     List<Country> getStatistics() throws CovidCasesException;
 
-    List<CovidStat> getStatisticsByCountry(String country) throws CovidCasesException;
+    Country getStatisticsByCountry(String country) throws CovidCasesException;
 }

@@ -25,14 +25,14 @@ var Module = (function () {
         countries.map(function (country) {
             $("#estadisticas > tbody").append(
                 "<tr> <td>" +
-                "<form><button type='button' onclick='Module.getCountryStatistics(\"" +
+                "<form><button class='btn btn-primary' type='button' onclick='Module.getCountryStatistics(\"" +
             country.countryname+ "\""+ ")' >"+country.countryname+"</button></form>"+
                 "</td>" +
                 "<td>" +
-                country.confirmed +
+                country.deaths +
                 "</td> " +
                 "<td>" +
-                country.deaths+
+                country.confirmed+
                 "</td> " +
                 "<td>" +
                 country.recovered+"</td>" +
@@ -40,19 +40,35 @@ var Module = (function () {
             );
         });
     };
-    function _tabled(stats) {
-        statd = _mapd(stats);
+    function _tabled(country) {
+        document.getElementById("nombrePais").innerHTML = country.countryname;
+        $("#nombrePais > h2").text(country.countryname+"Holaaa");
+        $("#pais > tbody").empty();
+
+        $("#pais > tbody").append(
+            "<tr> <td> Num Deaths</td> <td>" +
+            country.deaths +
+            "</td></tr>" +
+            "<tr> <td> Num Confirmed</td> <td>" +
+            country.confirmed +
+            "</td></tr>"+
+        "<tr> <td> Num Recovered</td> <td>" +
+        country.recovered +
+        "</td></tr>"
+
+        );
+
         $("#porpais > tbody").empty();
-        statd.map(function (statd) {
+        country.statList.map(function (statd) {
             $("#porpais > tbody").append(
                 "<tr> <td>" +
                 statd.province +
                 "</td>" +
                 "<td>" +
-                statd.confirmed +
+                statd.deaths +
                 "</td> " +
                 "<td>" +
-                statd.deaths+
+                statd.confirmed+
                 "</td> " +
                 "<td>" +
                 statd.recovered+"</td>" +

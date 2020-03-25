@@ -15,28 +15,23 @@ public class CovidCasesCacheImpl implements CovidCasesCache {
 
     Tuple<CopyOnWriteArrayList<Country>,Long> cacheCountries;
 
-    ConcurrentHashMap<String,Tuple<List<CovidStat>,Long>> cacheStats;
+    ConcurrentHashMap<String,Tuple<Country,Long>> cacheStats;
 
     public CovidCasesCacheImpl() {
-        this.cacheStats = new ConcurrentHashMap<String,Tuple<List<CovidStat>,Long>>();
+        this.cacheStats = new ConcurrentHashMap<String,Tuple<Country,Long>>();
     }
 
-    @Override
-    public Tuple<List<Country>, Long> getStoredStatistics() {
-        return null;
-    }
+
 
     @Override
-    public Tuple<List<CovidStat>, Long> getStoredStatisticsByName(String name) {
+    public Tuple<Country, Long> getStoredStatisticsByName(String name) {
         return cacheStats.get(name);
     }
 
-    @Override
-    public void saveStatistics(List<Country> countries) {
-    }
+
 
     @Override
-    public void saveStatisticsByCountry(String country, List<CovidStat> stats) {
-        cacheStats.put(country,new Tuple<List<CovidStat>,Long>(stats,System.nanoTime()));
+    public void saveStatisticsByCountry(String countryname, Country country) {
+        cacheStats.put(countryname,new Tuple<Country,Long>(country,System.nanoTime()));
     }
 }
