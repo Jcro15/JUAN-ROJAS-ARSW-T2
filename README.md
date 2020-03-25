@@ -1,5 +1,33 @@
 # Escuela Colombiana de Ingeniería Julio Garavito - Arquitecturas de Software ARSW - Parcial Segundo Tercio
 
+## Juan Camilo Rojas Ortiz ARSW 2020-1 T2
+
+### Arquitectura
+El diagrama de componentes fue modificado, la aplicacion cuenta con una arquitectura
+Cliente/Servidor donde el cliente es un browser que solicita servicios a una API-REST de forma asincrona
+dentro del servidor el controllador rest se comunica con una capa de servicios para poder responder a las peticiones.
+La capa de servicios hace uso de 3 componentes más , un servicio de cache que permite almacenar peticiones solicitadas
+anteriormente y dos conectores http a dos apis distintas, la primera para conseguir la información de las estadisticas de 
+coronavirus en una api de rapidapi y la segunda conexión también es a una api de rapidapi pero para consultar la localización de
+un país dado
+### Instrucciones de ejecucion
+En el directorio JUAN-ROJAS-ARSW-T2 ejecutar mvn spring-boot:run 
+### Instrucciones de ejecucion de pruebas
+En el directorio JUAN-ROJAS-ARSW-T2 ejecutar mvn test
+### Instrucciones de extensibilidad
+* Para extender el proyecto se pueden incluir distintas implementaciones de cualquiera de las interfaces definidas
+* Adicionalmente en la parte de front se puede crear un .js que implemente los dos metodos que tiene el apiclient.js
+usando otra tecnologia y luego cambiar el valor de la variable api en el archivo app.js
+* Para cambiar de proveedor simplemente hay que definir una clase que extienda la interfaz correspondiente ,
+marcarlo con la anotacion @Autowired y seleccionarla donde se desee usar usando la anotacion @Qualifier("nombre_del servicio")
+
+### URLS
+* Heroku [enlace](https://juan-rojas-arsw-t2.herokuapp.com/)
+* Git [enlace](https://github.com/Jcro15/JUAN-ROJAS-ARSW-T2)
+
+### Bonos
+* Realicé el bono del tiempo en caché
+
 ## Preparación para el Parcial
 
 Con el objetivo de preparar el examen final del segundo tercio, por favor siga las siguientes instrucciones.
